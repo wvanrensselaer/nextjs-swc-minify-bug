@@ -1,4 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Bug Reproduction
+
+```
+pnpm install
+NODE_ENV=production pnpm build
+NODE_ENV=production pnpm start
+```
+
+Should see: `ReferenceError: IMAGE_SIZE is not defined`
+
+Build appears to strip the `IMAGE_SIZE` constant (see `utils/image.ts`):
+
+```js
+6450: function(a, b, c) {
+		"use strict";
+		c.r(b),
+		c.d(b, {
+				default: function() {
+						return m
+				}
+		});
+		var d = c(1527)
+			, e = c(5737)
+			, f = c.n(e)
+			, g = c(2609)
+			, h = c.n(g)
+			, i = c(959)
+			, j = c(6185)
+			, k = c.n(j)
+			, l = function() {
+				new Image(IMAGE_SIZE,IMAGE_SIZE).src = "/vercel.svg"
+```
+
+Not sure if relelvant but I'm on MacOS Monterey, Intel chip.
 
 ## Getting Started
 
